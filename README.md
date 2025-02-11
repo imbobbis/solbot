@@ -39,7 +39,7 @@ Each service runs in a separate container for modular scalability.
 
 ### 2️⃣ Clone the Repository
 ```sh
-git clone https://github.com/YOUR_USERNAME/solbot.git
+git clone https://github.com/imbobbis/solbot.git
 cd solbot
 ```
 
@@ -57,7 +57,7 @@ docker-compose up -d
 ---
 
 ## 📖 Documentation
-Detailed documentation is available in the [Wiki](https://github.com/YOUR_USERNAME/solbot/wiki).
+Detailed documentation is available in the [Wiki](https://github.com/imbobbis/solbot/wiki).
 
 ---
 
