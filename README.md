@@ -24,14 +24,21 @@
 
 ```
 solbot/
-│── admin/            # Admin UI (Settings & Fee Management)
-│── api/              # Backend API for trade execution
-│── config/           # Configuration files
-│── db/               # Database (PostgreSQL)
-│── docs/             # Documentation and guides
-│── telegram/         # Telegram bot logic (User interaction)
-│── docker-compose.yml  # Containerized deployment setup
+│── admin/                # Admin UI (Settings & Fee Management)
+│   ├── Dockerfile        # Dockerfile for the Admin UI
+│── api/                  # Backend API for trade execution
+│   ├── Dockerfile        # Dockerfile for the API service
+│── config/               # Configuration files
+│── db/                   # Database (PostgreSQL)
+│── docs/                 # Documentation and guides
+│── telegram/             # Telegram bot logic (User interaction)
+│   ├── Dockerfile        # Dockerfile for the Telegram bot
+│── queue/                # Redis queue for task management
+│   ├── Dockerfile        # Dockerfile for the Redis queue worker
+│── docker-compose.yml    # Containerized deployment setup
 ```
+
+Each service has **its own Dockerfile**, ensuring **modular, scalable, and efficient containerization**.
 
 ---
 
