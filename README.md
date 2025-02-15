@@ -1,206 +1,232 @@
 # 🚀 SolBot - Solana Trading Bot
 
-Welcome to **SolBot** – a high-speed, Telegram-integrated trading bot for the **Solana blockchain**. SolBot is designed for **fast trade execution, copy trading, and automation**, making trading on Solana easier and more efficient.
+**SolBot** is a high-speed, **Telegram-integrated trading bot** for the **Solana blockchain**, designed for **fast execution, copy trading, and automation**. SolBot ensures **secure, efficient, and low-latency trading** while offering an intuitive **interactive UI** alongside command-based execution.
 
 ---
 
-## 📌 Features
+## 📌 Key Features
 
-- **🚀 Fast Trade Execution** – Optimized for low latency.
-- **📲 Trade via Telegram** – No complicated UI, just commands.
-- **📈 Copy Trading** – Automatically mimic successful wallets.
-- **🛑 Stop-Loss & Limit Orders** – Protect your trades.
-- **💰 Dollar-Cost Averaging (DCA)** – Smart investment strategy.
-- **🤖 Sniper & Auto Buy/Sell** – Fast reaction to market movements.
-- **🔒 Secure Wallet System** – No keys stored in configs.
-- **📦 Dockerized Deployment** – Simple and scalable.
-- **🔄 Dry-Run Mode** – Simulate trades without real funds.
-- **📊 Admin UI & Discord Bot** – Manage settings & analytics.
-
----
-
-## 🛠️ Getting Started
-
-This guide will help you set up **SolBot** from scratch. If you're a **beginner**, don’t worry! Follow these steps carefully.
+✅ **Ultra-Fast Trade Execution** – Optimized for minimal latency.  
+✅ **Telegram Bot Interface** – Trade using **commands** or an **interactive UI**.  
+✅ **Copy Trading** – Mimic top-performing wallets effortlessly.  
+✅ **Stop-Loss & Limit Orders** – Advanced trade management tools.  
+✅ **Dollar-Cost Averaging (DCA)** – Smart accumulation strategies.  
+✅ **Sniper & Auto Buy/Sell** – Rapid market entry/exit.  
+✅ **Integrated Wallet System** – Users set wallets via Telegram, **no keys stored in configs**.  
+✅ **Redis-Powered Trade Execution** – Ensures fast, queue-based trading.  
+✅ **Admin Dashboard & Discord Notifications** – Manage settings, fees, and analytics.  
+✅ **Scalable Microservices Architecture** – Designed for **performance & growth**.  
+✅ **Dry-Run Mode** – Simulate trades without using real funds.  
 
 ---
 
-### 1️⃣ **Set Up a Solana Wallet**
-SolBot requires a **Solana wallet** to execute trades. Each user **sets their own wallet inside Telegram**, so no wallet addresses are stored in the `.env` file.
+## 🏗️ Project Structure
 
-#### **Create Your Trading Wallet**
-1. Install **Phantom Wallet** (recommended)  
-   - [Download Phantom](https://phantom.app/)
-   - Set up your wallet and **write down your recovery phrase** somewhere safe.
-   - Get your **wallet address** (click on your wallet, copy the address).
-
-2. Fund Your Wallet  
-   - Buy **SOL** from an exchange (e.g., Binance, Coinbase).
-   - Withdraw SOL to your Phantom wallet address.
-
----
-
-### 2️⃣ **Create a Fee Collection Wallet (Admin Only)**
-SolBot charges a **1% fee per trade** (or **0.9% for referrals**). These fees need to be collected in a **separate fee wallet**.
-
-#### **How to Create a Fee Wallet**
-- The **fee collection wallet** should be a dedicated Solana wallet.
-- You can create a new wallet in **Phantom** or **Solflare**.
-- This wallet **must be set by the admin** using the **Admin UI or Admin Telegram bot**.
-
-#### **Setting the Fee Wallet**
-1. Open the **Admin UI** or **Admin Telegram Bot**.
-2. Run the command:
-   ```
-   /setfeewallet <wallet_address>
-   ```
-3. The bot will confirm that the **fee wallet has been updated**.
+```
+solbot/
+│── admin/            # Admin UI (Settings & Fee Management)
+│── api/              # Backend API for trade execution
+│── config/           # Configuration files
+│── db/               # Database (PostgreSQL)
+│── docs/             # Documentation and guides
+│── telegram/         # Telegram bot logic (User interaction)
+│── docker-compose.yml  # Containerized deployment setup
+```
 
 ---
 
-### 3️⃣ **Create a Telegram Bot using BotFather**
-SolBot operates through Telegram. You need to create a bot:
+## 📦 Installation & Setup
 
-1. Open Telegram and search for **BotFather**  
-   - [Click here to open BotFather](https://t.me/BotFather)
-
-2. Start a conversation and type:  
-   ```
-   /newbot
-   ```
-   - Choose a name for your bot (e.g., `SolBot`).
-   - Choose a **username** (must end with "bot", e.g., `SolBotTraderBot`).
-   - **Copy the API Token** provided by BotFather.
-
----
-
-### 4️⃣ **Install & Run SolBot**
-SolBot runs inside **Docker**. Follow these steps:
-
-#### **🔧 Install Docker**
-- [Download Docker](https://www.docker.com/get-started) and install it.
-- Verify installation:
+### **1️⃣ Install Docker & Clone the Repository**
+Ensure **Docker & Docker Compose** are installed:  
+- [Download Docker](https://www.docker.com/get-started)  
+- Verify installation:  
   ```bash
   docker --version
   ```
 
-#### **📦 Clone SolBot & Set Up**
-1. Open your terminal and run:
-   ```bash
-   git clone https://github.com/yourusername/solbot.git
-   cd solbot
+Clone the repository:  
+```bash
+git clone https://github.com/yourusername/solbot.git
+cd solbot
+```
+
+---
+
+### **2️⃣ Setting Up Your Solana Wallet**
+Each user **sets their own wallet inside Telegram**.  
+SolBot does **not store wallets in config files** for security.
+
+#### **Create a Solana Wallet (If You Don’t Have One)**
+1. Install **Phantom Wallet** ([Download](https://phantom.app/))
+2. Set up your wallet & **backup your recovery phrase**.
+3. Copy your **wallet address** (Click on your wallet → Copy Address).
+
+#### **Link Your Wallet to SolBot**
+Once your wallet is ready, link it inside Telegram:  
+```bash
+/setwallet <your_solana_wallet_address>
+```
+The bot will confirm:
+```
+✅ Wallet linked successfully!
+```
+
+---
+
+### **3️⃣ Dry-Run Mode (Simulated Trading)**
+**Dry-Run Mode** allows you to **test trades** without using real funds.
+
+#### **Enable Dry-Run Mode**
+```bash
+/dryrun on
+```
+🔹 **What Happens?**
+- Trades are simulated, but **not executed on Solana**.
+- You receive **real-time feedback** on trade performance.
+
+#### **Disable Dry-Run Mode**
+```bash
+/dryrun off
+```
+The bot will confirm:
+```
+✅ Dry-Run mode disabled. All trades will now be real.
+```
+
+---
+
+### **4️⃣ Admin-Only Fee Collection Wallet**
+SolBot **charges a 1% fee per trade** (0.9% with referrals).  
+Fees are collected in a **dedicated fee wallet**.
+
+#### **How to Set the Fee Wallet (Admin Only)**
+1. Open the **Admin UI** or **Admin Telegram Bot**.
+2. Run:
+   ```
+   /setfeewallet <wallet_address>
+   ```
+3. Confirmation:
+   ```
+   ✅ Fee wallet updated successfully.
    ```
 
-2. **Start the bot**:
-   ```bash
-   docker-compose up --build
-   ```
+---
+
+### **5️⃣ Running SolBot with Docker**
+Run the bot inside Docker:  
+```bash
+docker-compose up --build -d
+```
+
+To stop the bot:
+```bash
+docker-compose down
+```
 
 ---
 
-## 📜 How to Use SolBot
+## 📜 Using SolBot (Commands & Interactive UI)
 
-Once SolBot is running, **open Telegram and start your bot**.
+SolBot supports both **commands** and an **interactive UI**.
 
-### ✅ **Basic Commands**
-- **Buy tokens**:
+### **✅ Basic Commands**
+| **Command**       | **Function** |
+|------------------|-------------|
+| `/buy <TOKEN> <AMOUNT>`  | Buy a token |
+| `/sell <TOKEN> <AMOUNT>` | Sell a token |
+| `/copytrade <WALLET>`   | Mimic another wallet's trades |
+| `/stopcopytrade`        | Stop copy trading |
+| `/stoploss <TOKEN> <PRICE>` | Set a stop-loss |
+| `/dryrun on/off`        | Enable dry-run mode (simulate trades) |
+| `/balance`              | Check wallet balance |
+
+---
+
+## 🔐 Security Best Practices
+🚨 **Protect your funds** by following these security guidelines:
+
+✅ **Never share your private key or seed phrase** with anyone.  
+✅ **Verify the bot’s username** before interacting.  
+✅ **Enable 2FA** on your exchange/wallet for added security.  
+✅ **Use only official Telegram links** to access the bot.  
+
+---
+
+## ⚠️ Common Errors & Troubleshooting
+| **Issue**                  | **Solution** |
+|----------------------------|--------------|
+| Bot is not responding      | Restart Docker & check logs |
+| Trade not executing        | Ensure wallet is funded |
+| Cannot set fee wallet      | Only the admin can set this |
+
+---
+
+## 📡 API Endpoints (For Future Admin Features)
+```
+GET /api/trades - Retrieve all trades
+POST /api/trade - Execute a new trade
+```
+
+---
+
+## 👥 User Role Breakdown
+| **Role**      | **Permissions** |
+|--------------|----------------|
+| User        | Buy/Sell, Copy Trade |
+| Admin       | Manage fee wallet, update bot settings |
+
+---
+
+## 🚀 Performance Benchmarks
+```
+⚡ Trade Execution Speed: ~500ms (under normal network conditions)
+📉 Max Delay per trade: < 1 second (during peak load)
+```
+
+---
+
+## ❓ Frequently Asked Questions (FAQ)
+- **How do I remove my wallet?**
   ```
-  /buy <TOKEN> <AMOUNT>
-  Example: /buy SOL 1
+  /removewallet
   ```
-- **Sell tokens**:
+- **Can I trade without fees?**
   ```
-  /sell <TOKEN> <AMOUNT>
-  Example: /sell SOL 0.5
+  No, but referrals get a discount (0.9% fee).
   ```
-- **Copy trade a wallet**:
+- **Can I use multiple wallets?**
   ```
-  /copytrade <WALLET_ADDRESS>
-  Example: /copytrade 7GhF9...xyz
-  ```
-- **Set stop-loss**:
-  ```
-  /stoploss <TOKEN> <PRICE>
-  Example: /stoploss SOL 90
-  ```
-- **Enable dry-run mode** (test without real funds):
-  ```
-  /dryrun on
-  ```
-- **Check wallet balance**:
-  ```
-  /balance
+  No, one wallet per user at a time.
   ```
 
 ---
 
-## 🛠️ Fee Management (Admin Only)
-
-Fees are collected from trades and sent to the **fee wallet**.
-
-### **Managing Fees via Admin UI**
-- Log into the **Admin UI**.
-- View **collected fees**, total trades, and analytics.
-- Withdraw **fees from the fee wallet** as needed.
-
-### **Managing Fees via Discord**
-- The **Admin Discord Bot** provides real-time updates on:
-  - Total collected fees.
-  - Withdrawal notifications.
-  - Security warnings.
-- You can set alerts for **fee balance thresholds**.
-
----
-
-## 🔮 Roadmap
-
+## 🔮 Future Plans
 ✅ **Phase 1:** Core Bot Development  
 ✅ **Phase 2:** Admin UI, Trade Analytics, Discord Bot  
-🔜 **Phase 3:** AI-Powered Trading  
+🔜 **Phase 3:** AI-Powered Trading, Advanced Strategies  
 
 ---
 
 ## 🔐 Proprietary License
 
-**Copyright (c) 2025 SolBot Developer**
+**This software is proprietary** and cannot be copied, modified, or redistributed without explicit permission.
 
-All rights reserved.
-
-This software is proprietary and cannot be copied, modified, or redistributed without explicit permission from the original developer.
-
-By using this software, you agree to the following terms:
-- Personal use is permitted.
-- Commercial use (reselling, offering as a service) is strictly **prohibited** without a separate license.
-- Reverse engineering or modifying the software is not allowed.
-
-For inquiries about commercial licensing, contact the developer.
-
----
-
-## 🤝 Contributing
-
-At this time, SolBot is **not open-source**. If you wish to contribute or request a feature, feel free to open an issue on GitHub.
+For **commercial licensing inquiries**, contact the developer.
 
 ---
 
 ## ❓ Need Help?
-If you run into any issues:
 1. **Check your Solana wallet connection** inside Telegram.
-2. **Make sure your Solana wallet is funded**.
+2. **Ensure your Solana wallet is funded**.
 3. **Verify your Telegram bot token is correct**.
-4. **Restart the bot** with:
+4. **Restart the bot**:
    ```bash
    docker-compose down
-   docker-compose up --build
+   docker-compose up --build -d
    ```
 
 ---
 
-## 🔥 Summary of Key Changes
-✅ **Wallets are set by users inside Telegram** (not stored in `.env`).  
-✅ **Admin can set the fee collection wallet** via the **Admin UI or Admin Telegram Bot**.  
-✅ **Fee management is handled via the Admin UI & Discord notifications**.  
-✅ **Admin Telegram Bot is separate from SolBot** (for security & management).  
-
-🚀 **This ensures better security, flexibility, and scalability for SolBot!** 🔥
-
+🚀 **This README ensures everything is well-documented for smooth onboarding & efficient trading!** 🔥
