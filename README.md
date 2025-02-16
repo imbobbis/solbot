@@ -20,6 +20,87 @@
 
 ---
 
+## 🛠️ Requirements to Build & Run SolBot
+
+To set up and run SolBot, you will need the following:
+
+### **1️⃣ Solana Wallets (Phantom)**
+You will need **two separate wallets**:
+
+✅ **Trading Wallet** (For executing trades)  
+   - This is the wallet linked to each user via Telegram.  
+   - Users set their own wallets using `/setwallet <wallet_address>`.  
+
+✅ **Fee Collection Wallet** (For collecting trading fees)  
+   - This is the **admin-only wallet** that collects the **1% trading fee**.  
+   - The admin sets it using `/setfeewallet <wallet_address>`.  
+
+**👉 Recommended Wallets:** [Phantom](https://phantom.app/) or [Solflare](https://solflare.com/).  
+
+---
+
+### **2️⃣ Telegram Bot API Key**
+✅ **Create a bot using BotFather** ([Open BotFather](https://t.me/BotFather))  
+✅ Run `/newbot` → Choose a name → Copy the **API Token**  
+✅ Add this token to the bot environment configuration.
+
+---
+
+### **3️⃣ Docker & Docker Compose**
+✅ Install **Docker**: [Download Here](https://www.docker.com/get-started)  
+✅ Verify installation:
+```bash
+docker --version
+```
+✅ **Clone the repository**:
+```bash
+git clone https://github.com/yourusername/solbot.git
+cd solbot
+```
+✅ Start the bot:
+```bash
+docker-compose up --build -d
+```
+
+---
+
+### **4️⃣ Solana RPC Node (For Blockchain Access)**
+✅ Get a **Solana RPC URL** (e.g., from [QuickNode](https://www.quicknode.com/) or [Alchemy](https://www.alchemy.com/)).  
+✅ Add the **RPC URL** to the bot configuration.
+
+---
+
+### **5️⃣ PostgreSQL Database**
+✅ SolBot uses a **PostgreSQL database** to store **wallets, trades, and settings**.  
+✅ This is **automatically set up via Docker Compose**.
+
+---
+
+### **6️⃣ Redis Queue (For Trade Execution)**
+✅ Redis is used for **fast & scalable trade execution**.  
+✅ This is **included in Docker Compose**, so no manual setup is needed.
+
+---
+
+### **7️⃣ Admin UI & Discord Bot (For Management)**
+✅ **Admin UI** lets you manage **trades, fees, and users**.  
+✅ **Discord Bot** provides **real-time alerts** on **trades & fees**.
+
+---
+
+### **🔥 Summary of What You Need**
+| **Requirement**     | **Purpose** |
+|--------------------|------------|
+| **Phantom Wallet (Trading)** | Executes trades for each user |
+| **Phantom Wallet (Fees)** | Collects fees from trades (Admin Only) |
+| **Telegram Bot API Token** | Allows interaction with Telegram |
+| **Solana RPC URL** | Connects the bot to the blockchain |
+| **Docker & Docker Compose** | Runs SolBot in a containerized setup |
+| **PostgreSQL Database** | Stores user data & trade history |
+| **Redis Queue** | Ensures fast trade execution |
+
+---
+
 ## 🏗️ Project Structure
 
 ```
@@ -39,173 +120,6 @@ solbot/
 ```
 
 Each service has **its own Dockerfile**, ensuring **modular, scalable, and efficient containerization**.
-
----
-
-## 📦 Installation & Setup
-
-### **1️⃣ Install Docker & Clone the Repository**
-Ensure **Docker & Docker Compose** are installed:  
-- [Download Docker](https://www.docker.com/get-started)  
-- Verify installation:  
-  ```bash
-  docker --version
-  ```
-
-Clone the repository:  
-```bash
-git clone https://github.com/yourusername/solbot.git
-cd solbot
-```
-
----
-
-### **2️⃣ Setting Up Your Solana Wallet**
-Each user **sets their own wallet inside Telegram**.  
-SolBot does **not store wallets in config files** for security.
-
-#### **Create a Solana Wallet (If You Don’t Have One)**
-1. Install **Phantom Wallet** ([Download](https://phantom.app/))
-2. Set up your wallet & **backup your recovery phrase**.
-3. Copy your **wallet address** (Click on your wallet → Copy Address).
-
-#### **Link Your Wallet to SolBot**
-Once your wallet is ready, link it inside Telegram:  
-```bash
-/setwallet <your_solana_wallet_address>
-```
-The bot will confirm:
-```
-✅ Wallet linked successfully!
-```
-
----
-
-### **3️⃣ Dry-Run Mode (Simulated Trading)**
-**Dry-Run Mode** allows you to **test trades** without using real funds.
-
-#### **Enable Dry-Run Mode**
-```bash
-/dryrun on
-```
-🔹 **What Happens?**
-- Trades are simulated, but **not executed on Solana**.
-- You receive **real-time feedback** on trade performance.
-
-#### **Disable Dry-Run Mode**
-```bash
-/dryrun off
-```
-The bot will confirm:
-```
-✅ Dry-Run mode disabled. All trades will now be real.
-```
-
----
-
-### **4️⃣ Admin-Only Fee Collection Wallet**
-SolBot **charges a 1% fee per trade** (0.9% with referrals).  
-Fees are collected in a **dedicated fee wallet**.
-
-#### **How to Set the Fee Wallet (Admin Only)**
-1. Open the **Admin UI** or **Admin Telegram Bot**.
-2. Run:
-   ```
-   /setfeewallet <wallet_address>
-   ```
-3. Confirmation:
-   ```
-   ✅ Fee wallet updated successfully.
-   ```
-
----
-
-### **5️⃣ Running SolBot with Docker**
-Run the bot inside Docker:  
-```bash
-docker-compose up --build -d
-```
-
-To stop the bot:
-```bash
-docker-compose down
-```
-
----
-
-## 📜 Using SolBot (Commands & Interactive UI)
-
-SolBot supports both **commands** and an **interactive UI**.
-
-### **✅ Basic Commands**
-| **Command**       | **Function** |
-|------------------|-------------|
-| `/buy <TOKEN> <AMOUNT>`  | Buy a token |
-| `/sell <TOKEN> <AMOUNT>` | Sell a token |
-| `/copytrade <WALLET>`   | Mimic another wallet's trades |
-| `/stopcopytrade`        | Stop copy trading |
-| `/stoploss <TOKEN> <PRICE>` | Set a stop-loss |
-| `/dryrun on/off`        | Enable dry-run mode (simulate trades) |
-| `/balance`              | Check wallet balance |
-
----
-
-## 🔐 Security Best Practices
-🚨 **Protect your funds** by following these security guidelines:
-
-✅ **Never share your private key or seed phrase** with anyone.  
-✅ **Verify the bot’s username** before interacting.  
-✅ **Enable 2FA** on your exchange/wallet for added security.  
-✅ **Use only official Telegram links** to access the bot.  
-
----
-
-## ⚠️ Common Errors & Troubleshooting
-| **Issue**                  | **Solution** |
-|----------------------------|--------------|
-| Bot is not responding      | Restart Docker & check logs |
-| Trade not executing        | Ensure wallet is funded |
-| Cannot set fee wallet      | Only the admin can set this |
-
----
-
-## 📡 API Endpoints (For Future Admin Features)
-```
-GET /api/trades - Retrieve all trades
-POST /api/trade - Execute a new trade
-```
-
----
-
-## 👥 User Role Breakdown
-| **Role**      | **Permissions** |
-|--------------|----------------|
-| User        | Buy/Sell, Copy Trade |
-| Admin       | Manage fee wallet, update bot settings |
-
----
-
-## 🚀 Performance Benchmarks
-```
-⚡ Trade Execution Speed: ~500ms (under normal network conditions)
-📉 Max Delay per trade: < 1 second (during peak load)
-```
-
----
-
-## ❓ Frequently Asked Questions (FAQ)
-- **How do I remove my wallet?**
-  ```
-  /removewallet
-  ```
-- **Can I trade without fees?**
-  ```
-  No, but referrals get a discount (0.9% fee).
-  ```
-- **Can I use multiple wallets?**
-  ```
-  No, one wallet per user at a time.
-  ```
 
 ---
 
